@@ -5,16 +5,10 @@ const Info = () =>{
     const [nickName, setNickName] = useState('');
 
     useEffect(()=>{
-        console.log('렌더링 완료!!!');
-        console.log([{
-            name,
-            nickName
-        }]);
-    })
-    // useEffect의 dependency로 아무것도 전달하지 않았으므로 컴포넌트가 마운트되었을 때는 물론이고,
-    // 어떠한 형태로든 컴포넌트가 업데이트되면 useEffect가 항상 실행된다.
-    // 따라서 타자를 한자씩만 쳐도 여기서는 setName이나 setNickName이 state를 업데이트하여 컴포넌트를
-    // 다시 렌더링하므로 그 때마다 useEffect가 실행되는 것
+        console.log('마운트 될 때만 실행됨!');
+    },[])
+    // useEffect의 dependency로 빈 배열을 전달하였으므로 컴포넌트의 어떠한 갱신에도 useEffect는 반응하지 않는다.
+    // 오로지 마운트되었을 때만 실행된다.
 
     const onChangeName = e => {
         setName(e.target.value);
