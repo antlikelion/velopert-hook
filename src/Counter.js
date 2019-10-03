@@ -1,18 +1,35 @@
-import React, {useState} from 'react';
+import React, {useReducer} from 'react';
+// useReducer는 useState보다 컴포넌트에서 더 다양한 상황에 따라 다양한 상태를 다른 값으로 
+// 업데이트하고 싶을 때 사용하는 hook
+// useReducer의 가장 큰 장점은 컴포넌트 업데이트 로직을 컴포넌트 바깥으로 빼낼 수 있다는 것!!!
+
+// reducer함수는 현재 상태와 업데이트를 위해 필요한 정보를 담은 action값을 전달 받아 새로운 상태를 반환
+// reducer함수에서 새로운 상태를 만들 때에는 꼭 불변성?을 지켜야 함
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'INCREMENT':
+            return {value:state.value + 1}
+        case 'DECREMENT':
+            return {value:state.value - 1}
+        default:
+            return state;
+        // 아무것도 해당되지 않을 때는 기존 상태 반환   
+    }
+}
 
 const Counter = () =>{
-    const [value, setValue] = useState(0);
-    // useState의 파라미터로 전달하는 값은 상태의 기본값
-    // useState는 배열을 반환하는데, 배열의 첫번째 요소는 상태 값이고, 두번째 요소는 상태를 설정하는 함수임
-    // 두번째 요소인 함수에 파라미터를 넣어서 호출하게 되면 전달받은 파라미터로 값이 바뀌고, 컴포넌트는 다시 렌더링됨
+    const [state, dispatch] = useReducer(reducer, {value:0})
+    // useReducer의 첫번째 인자는 reducer함수, 두번째 인자는 해당 reducer의 기본값임
+    // 그 결과 반환되는 state는 현재 가리키고 있는 상태, dispatch는 action을 발생시키는 함수임
 
     return (
         <div>
             <p>
-                현재 카운터 값은 <b>{value}</b> 입니다.
+                현재 카운터 값은 <b>{state.value}</b> 입니다.
             </p>
-            <button onClick={()=>setValue(value + 1)}>+1</button>
-            <button onClick={()=>setValue(value - 1)}>-1</button>
+            <button onClick={()=>dispatch({type:'INCREMENT'})}>+1</button>
+            <button onClick={()=>dispatch({type:'DECREMENT'})}>-1</button>
+            {/* 위와 같이 dispatch에 action을 전달하면 reducer함수가 호출된다 */}
         </div> 
     )
 }

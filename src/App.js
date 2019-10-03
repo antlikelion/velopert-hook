@@ -1,8 +1,12 @@
 import React, {useState} from 'react'
-import ContextSample from './ContextSample'
+// import ContextSample from './ContextSample'
+// import Counter from './Counter'
+import Info from './Info'
 
 const App = () => {
-  return <ContextSample />
+  return <Info />
+  // return <Counter/>
+  // return <ContextSample />
 }
 
 export default App;

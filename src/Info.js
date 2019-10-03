@@ -1,35 +1,30 @@
-import React, {useState, useEffect} from 'react';
+import React, {useReducer} from 'react';
+
+const reducer = (state, action) => {
+    return {
+        ...state,
+        [action.name]:action.value
+        // 객체에 새로운 키,값 페어를 추가하는 로직임!
+    }
+}
 
 const Info = () =>{
-    const [name, setName] = useState('');
-    const [nickName, setNickName] = useState('');
-
-    useEffect(()=>{
-        console.log('effect');
-        console.log(name);
-        return () => {
-            console.log('cleanup');
-            console.log(name);
-        }
-    },[name])
-    // useEffect는 기본적으로 렌더링 되고난 직후마다 실행된다.
-    // 컴포넌트가 언마운트되기 전이나, 업데이트 되기 직전에 특정 작업을 수행하고 싶다면
-    // useEffect에서 cleanup함수를 반환해야 한다.
-    // + 컴포넌트가 언마운트될 때에만 cleanup함수를 실행하려면 dependency로 빈 배열을 전하면 된다
-
-    const onChangeName = e => {
-        setName(e.target.value);
-    };
-
-    const onChangeNickName = e => {
-        setNickName(e.target.value);
+    const [state, dispatch] = useReducer(reducer, {
+        name: '',
+        nickName: ''
+    })
+    const {name, nickName} = state;
+    const onChange = e => {
+        console.log(e.target);
+        dispatch(e.target)
+        // action값에는 어떠한 유형의 값도 전달이 가능하다
     }
 
     return (
         <div>
             <div>
-                <input value={name} onChange={onChangeName} />
-                <input value={nickName} onChange={onChangeNickName} />
+                <input name="name" value={name} onChange={onChange} />
+                <input name="nickName" value={nickName} onChange={onChange} />
             </div>
             <div>
                 <div>
