@@ -5,10 +5,9 @@ const Info = () =>{
     const [nickName, setNickName] = useState('');
 
     useEffect(()=>{
-        console.log('마운트 될 때만 실행됨!');
-    },[])
-    // useEffect의 dependency로 빈 배열을 전달하였으므로 컴포넌트의 어떠한 갱신에도 useEffect는 반응하지 않는다.
-    // 오로지 마운트되었을 때만 실행된다.
+        console.log(name);
+    },[name])
+    // useEffect의 dependency로 name이 담긴 배열을 전달해줬기에, 마운트 된 이후로는 name의 갱신에만 반응한다.
 
     const onChangeName = e => {
         setName(e.target.value);
