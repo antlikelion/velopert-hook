@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 
 const getAverage = numbers => {
     console.log('평균값 계산중...')
@@ -20,11 +20,17 @@ const Average = () =>{
         setList(nextList);
         setNumber('');
     }
+
+    const avg = useMemo(()=>getAverage(list), [list])
+    // list의 내용이 바뀔 때에만 getAverage함수를 호출함
+    // useEffect가 컴포넌트가 렌더링 자체에 초점을 맞춘 것이라면,
+    // useMemo는 컴포넌트를 렌더링할 때의 연산에 초점을 맞춘 것 같다
+    // 솔직히 무슨 차이인지 모르겠다.
+    // useEffect써도 될 줄 알았는데 안 됨...
+
     return (
         <div>
             <input value={number} onChange={onChange} />
-            {/* 이 상태로는 onChange이벤트가 발생할 때마다 컴포넌트가 재렌더링되어 getAverage함수가 쓸데없이
-            많이 호출된다. */}
             <button onClick={onInsert}>등록</button>
             <ul>
                 {list.map((value, index)=>(
@@ -32,7 +38,7 @@ const Average = () =>{
                 ))}
             </ul>
             <div>
-                <b>평균 값 : </b>{getAverage(list)}
+                <b>평균 값 : </b>{avg}
             </div>
         </div>
     )
