@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useCallback} from 'react';
+import React, {useState, useMemo, useCallback, useRef} from 'react';
 // useCallback역시 useMemo처럼 렌더링 성능 최적화에 사용된다.
 // useCallback의 기능은 이벤트 핸들러 함수를 필요할 때만 생성하는 것.
 // ->컴포넌트의 렌더링이 자주 발생하거나, 렌더링해야할 컴포넌트의 개수가 많을 때 유용함
@@ -14,6 +14,8 @@ const getAverage = numbers => {
 const Average = () =>{
     const [list, setList] = useState([]);
     const [number, setNumber] = useState('');
+    const inputEl = useRef(null);
+    // useRef를 통해 만든 객체 안의 current값이 실제 엘리먼트를 가리키게 된다
 
     const onChange = useCallback(e =>{
         setNumber(e.target.value)
@@ -38,7 +40,7 @@ const Average = () =>{
 
     return (
         <div>
-            <input value={number} onChange={onChange} />
+            <input value={number} onChange={onChange} ref={inputEl} />
             <button onClick={onInsert}>등록</button>
             <ul>
                 {list.map((value, index)=>(
