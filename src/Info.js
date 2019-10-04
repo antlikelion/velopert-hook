@@ -1,24 +1,13 @@
 import React, {useReducer} from 'react';
-
-const reducer = (state, action) => {
-    return {
-        ...state,
-        [action.name]:action.value
-        // 객체에 새로운 키,값 페어를 추가하는 로직임!
-    }
-}
+import useInput from './useInput'
 
 const Info = () =>{
-    const [state, dispatch] = useReducer(reducer, {
+    const [state, onChange] = useInput({
         name: '',
-        nickName: ''
+        nickName: '' 
     })
+
     const {name, nickName} = state;
-    const onChange = e => {
-        console.log(e.target);
-        dispatch(e.target)
-        // action값에는 어떠한 유형의 값도 전달이 가능하다
-    }
 
     return (
         <div>
